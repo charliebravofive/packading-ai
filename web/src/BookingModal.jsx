@@ -899,7 +899,24 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
         setGiftStep(s => s + 1);
       }
     } else {
-      setStep(s => s + 1);
+      // Free product (clarity call) — skip payment, book directly from Details step
+      if (step === 3 && (product?.price === 0 || product?.id === 'clarity-call')) {
+        try {
+          await fetch("/api/bookings", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              first_name: contact.firstName, last_name: contact.lastName,
+              email: contact.email, phone: contact.phone,
+              product_id: product?.id,
+              session_date: date?.toLocaleDateString("en-AU"),
+              session_time: time, notes: contact.notes || null,
+            }),
+          });
+        } catch (_) {}
+        setDone(true);
+      } else {
+        setStep(s => s + 1);
+      }
     }
   };
 
@@ -932,7 +949,7 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
   const nextLabel =
     isGiftCardFlow
       ? (giftStep === 0 ? "Continue to payment →" : giftStep === 2 ? "Choose a date →" : giftStep === 3 ? "Choose a time →" : "Confirm booking →")
-      : (step === 3 ? "Continue to payment →" : "Continue →");
+      : (step === 3 && (product?.price === 0 || product?.id === 'clarity-call') ? "Confirm free booking →" : step === 3 ? "Continue to payment →" : "Continue →");
 
   return (
     <div style={overlayStyle} onClick={e => e.target === e.currentTarget && onClose()}>

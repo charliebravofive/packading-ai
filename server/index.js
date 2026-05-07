@@ -13,6 +13,7 @@ app.use(cookieParser());
 app.use('/api/gift-cards', require('./routes/giftCards'));
 app.use('/api/bookings',   require('./routes/bookings'));
 app.use('/api/contact',    require('./routes/contact'));
+app.use('/api/chat',       require('./routes/chat'));
 
 // Public config (pricing + availability only — no sensitive data)
 const fs = require('fs');
