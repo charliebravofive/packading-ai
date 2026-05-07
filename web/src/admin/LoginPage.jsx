@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
 import { login } from './adminApi.js';
 
-function BrandLogoInline({ height = 56 }) {
-  const ratio = 700 / 1000;
-  const w = height / ratio;
+function BrandLogoInline() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width={w} height={height} style={{ display: 'block' }}>
-      <rect width="1000" height="700" fill="transparent" />
-      <circle cx="500" cy="240" r="150" fill="rgba(255,255,255,0.06)" />
-      <circle cx="500" cy="240" r="150" fill="none" stroke="#c8856a" strokeWidth="5" />
-      <text x="500" y="298" fontFamily="Georgia, 'Times New Roman', serif" fontSize="160" fontWeight="700" textAnchor="middle" letterSpacing="-7">
-        <tspan fill="#f0ece6">A</tspan><tspan fill="#c8856a">S</tspan>
-      </text>
-      <text x="500" y="476" fontFamily="Georgia, 'Times New Roman', serif" fontSize="58" fontWeight="700" fill="#f0ece6" textAnchor="middle" letterSpacing="4">ASSISTED</text>
-      <text x="500" y="544" fontFamily="Georgia, 'Times New Roman', serif" fontSize="58" fontWeight="400" fontStyle="italic" fill="#c8856a" textAnchor="middle" letterSpacing="2">stretches</text>
-    </svg>
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 0 }}>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 36, color: '#141414', letterSpacing: '-0.5px', lineHeight: 1 }}>Pack</span>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontStyle: 'italic', fontSize: 36, color: '#C4724A', letterSpacing: '-0.5px', lineHeight: 1 }}>ading</span>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontSize: 21, color: '#C4724A', letterSpacing: '1px', lineHeight: 1, marginLeft: 2, alignSelf: 'flex-end', paddingBottom: 3 }}>.ai</span>
+    </div>
   );
 }
 
@@ -44,7 +37,7 @@ export default function LoginPage({ onLogin }) {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#1a1816',
+      background: '#141414',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -100,7 +93,7 @@ export default function LoginPage({ onLogin }) {
             style={{
               width: '100%',
               padding: '12px',
-              background: loading ? '#d4a594' : '#c8856a',
+              background: loading ? '#b06240' : '#C4724A',
               color: '#fff',
               border: 'none',
               borderRadius: 8,

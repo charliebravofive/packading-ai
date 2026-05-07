@@ -9,16 +9,11 @@ import ConfigPage from './ConfigPage.jsx';
 
 function BrandLogoSmall() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width={60} height={42} style={{ display: 'block' }}>
-      <rect width="1000" height="700" fill="transparent" />
-      <circle cx="500" cy="240" r="150" fill="rgba(255,255,255,0.06)" />
-      <circle cx="500" cy="240" r="150" fill="none" stroke="#c8856a" strokeWidth="5" />
-      <text x="500" y="298" fontFamily="Georgia, 'Times New Roman', serif" fontSize="160" fontWeight="700" textAnchor="middle" letterSpacing="-7">
-        <tspan fill="#f0ece6">A</tspan><tspan fill="#c8856a">S</tspan>
-      </text>
-      <text x="500" y="476" fontFamily="Georgia, 'Times New Roman', serif" fontSize="58" fontWeight="700" fill="#f0ece6" textAnchor="middle" letterSpacing="4">ASSISTED</text>
-      <text x="500" y="544" fontFamily="Georgia, 'Times New Roman', serif" fontSize="58" fontWeight="400" fontStyle="italic" fill="#c8856a" textAnchor="middle" letterSpacing="2">stretches</text>
-    </svg>
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 0, padding: '4px 0' }}>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 700, fontSize: 22, color: '#F5F0EB', letterSpacing: '-0.5px', lineHeight: 1 }}>Pack</span>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontStyle: 'italic', fontSize: 22, color: '#C4724A', letterSpacing: '-0.5px', lineHeight: 1 }}>ading</span>
+      <span style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontSize: 13, color: '#C4724A', letterSpacing: '1px', lineHeight: 1, marginLeft: 2, alignSelf: 'flex-end', paddingBottom: 2 }}>.ai</span>
+    </div>
   );
 }
 
@@ -91,7 +86,7 @@ export default function AdminLayout({ currentPage, setPage, onLogout }) {
       <div style={{
         width: 240,
         minWidth: 240,
-        background: '#1e2a24',
+        background: '#141414',
         display: 'flex',
         flexDirection: 'column',
         position: 'fixed',
