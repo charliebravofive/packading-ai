@@ -208,7 +208,7 @@ export default function AdminLayout({ currentPage, setPage, onLogout }) {
               </button>
             )}
             <span style={{ fontSize: 14, color: '#888', fontWeight: 400 }}>
-              Assisted Stretches Admin
+              packading.ai Admin
             </span>
           </div>
           <span style={{ fontSize: 16, fontWeight: 700, color: '#1a1816' }}>

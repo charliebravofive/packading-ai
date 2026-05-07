@@ -10,20 +10,20 @@ const stripePromise = STRIPE_KEY && STRIPE_KEY !== "pk_test_placeholder"
 const DEMO_MODE = !stripePromise;
 
 export const PRODUCTS = [
-  { id: "session", label: "Single Session", price: 125, per: null,  desc: "1 × 60-min assisted stretch session", badge: null },
-  { id: "5-pack",  label: "5-Pack",         price: 575, per: 115,   desc: "5 × 60-min sessions · Valid 6 months", badge: "Popular" },
-  { id: "10-pack", label: "10-Pack",         price: 1000, per: 100,  desc: "10 × 60-min sessions · Valid 12 months", badge: null },
+  { id: "clarity-call",       label: "Clarity Call",             price: 0,    per: null, desc: "Free 30-min strategy call — we map where AI can save your business real time and money.", badge: "Free" },
+  { id: "assessment-deposit", label: "AI Readiness Assessment",  price: 1800, per: null, desc: "Full 2–3 session assessment with a detailed 20-page AI Readiness Report.", badge: null },
+  { id: "retainer-starter",   label: "Starter Retainer",         price: 800,  per: null, desc: "Monthly strategy call, email support, quarterly tool review. Best for 1–5 staff.", badge: null },
 ];
 
 const MONTH_NAMES = ["January","February","March","April","May","June",
   "July","August","September","October","November","December"];
 const DAY_LABELS  = ["Su","Mo","Tu","We","Th","Fr","Sa"];
 
-// Real availability: Monday=1, Friday=5, Saturday=6
+// Default availability: Monday=1, Friday=5, Saturday=6 (overridden by live config)
 const AVAILABLE_DAYS = new Set([1, 5, 6]);
 const SLOTS_BY_DAY = {
-  1: ["4:00 PM", "5:00 PM"],
-  5: ["4:00 PM", "5:00 PM"],
+  1: ["9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM"],
+  5: ["9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM"],
   6: ["8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM"],
 };
 
@@ -35,9 +35,9 @@ function getGiftMaxDate(productId) {
   if (!productId) return null;
   const d = new Date();
   d.setHours(0, 0, 0, 0);
-  if (productId === "5-pack")  { d.setMonth(d.getMonth() + 3); return d; }
-  if (productId === "10-pack") { d.setMonth(d.getMonth() + 6); return d; }
-  return null;
+  // All packading gift consultations expire 12 months from purchase
+  d.setFullYear(d.getFullYear() + 1);
+  return d;
 }
 
 // ─── STYLES ──────────────────────────────────────────────────
@@ -130,8 +130,8 @@ function ServiceStep({ selected, onSelect, initialProduct, products }) {
   const displayProducts = products || PRODUCTS;
   return (
     <div>
-      <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 8 }}>Choose your session</h2>
-      <p style={{ fontSize: 14, color: C.textSec, marginBottom: 24, lineHeight: 1.6 }}>Select a single session or save with a pack.</p>
+      <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 8 }}>Book a clarity call</h2>
+      <p style={{ fontSize: 14, color: C.textSec, marginBottom: 24, lineHeight: 1.6 }}>Select a booking type to get started.</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {displayProducts.map(p => {
           const active = selected?.id === p.id;
@@ -152,11 +152,11 @@ function ServiceStep({ selected, onSelect, initialProduct, products }) {
   );
 }
 
-// ─── GIFT CARD DENOMINATIONS ─────────────────────────────────
+// ─── GIFT CONSULTATION DENOMINATIONS ─────────────────────────
 const GIFT_DENOMS = [
-  { sessions: 1,  product: PRODUCTS[0], price: "$125",   saving: null,       tagline: "One hour where the world stops." },
-  { sessions: 5,  product: PRODUCTS[1], price: "$575",   saving: "Save $50", tagline: "A real reset." },
-  { sessions: 10, product: PRODUCTS[2], price: "$1,000", saving: "Save $250",tagline: "For the person that is committed to taking assisted stretching seriously." },
+  { sessions: 1, product: PRODUCTS[0], price: "Free",    saving: null,         tagline: "Give someone the clarity call that changes how they think about AI." },
+  { sessions: 1, product: PRODUCTS[1], price: "$1,800",  saving: null,         tagline: "A full AI Readiness Assessment — a genuine business investment." },
+  { sessions: 1, product: PRODUCTS[2], price: "$800/mo", saving: "Retainer",   tagline: "A month of ongoing AI advisory support for a business you believe in." },
 ];
 
 // ─── DATE STEP ───────────────────────────────────────────────
@@ -219,7 +219,7 @@ function DateStep({ value, onChange, maxDate, sessionNum, maxSessions, available
     <div>
       <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 8 }}>Pick a date</h2>
       {maxSessions > 1 && <div style={{ fontSize: 12, fontWeight: 600, color: C.terracotta, letterSpacing: "0.08em", marginBottom: 6 }}>Session {sessionNum} of {maxSessions}</div>}
-      <p style={{ fontSize: 14, color: C.textSec, marginBottom: 24, lineHeight: 1.6 }}>Available Monday (4–6 pm), Friday (4–6 pm) and Saturday (8 am–1 pm). Select a day to see times.</p>
+      <p style={{ fontSize: 14, color: C.textSec, marginBottom: 24, lineHeight: 1.6 }}>Available Monday, Friday and Saturday. Select a day to see available times.</p>
       <div style={{ background: C.white, borderRadius: 12, padding: "20px", border: `1px solid ${C.boneDark}` }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <button onClick={() => canPrev && setView(new Date(year, month - 1, 1))} style={{ background: "none", border: "none", cursor: canPrev ? "pointer" : "default", fontSize: 20, color: canPrev ? C.forest : C.boneDark, padding: "4px 8px", lineHeight: 1 }}>‹</button>
@@ -264,13 +264,13 @@ function DateStep({ value, onChange, maxDate, sessionNum, maxSessions, available
         </div>
       </div>
       {hoveredHoliday && (
-        <p style={{ fontSize: 12, color: C.clay, marginTop: 8, textAlign: "center" }}>🏖️ Studio closed: {hoveredHoliday}</p>
+        <p style={{ fontSize: 12, color: C.clay, marginTop: 8, textAlign: "center" }}>Unavailable: {hoveredHoliday}</p>
       )}
       {visibleHolidays.length > 0 && !hoveredHoliday && (
         <div style={{ marginTop: 10 }}>
           {visibleHolidays.map(h => (
             <p key={h.id} style={{ fontSize: 12, color: C.clay, margin: "4px 0", textAlign: "center" }}>
-              🏖️ <strong>{h.name}</strong>: {h.start === h.end ? h.start : `${h.start} – ${h.end}`}
+              <strong>{h.name}</strong>: {h.start === h.end ? h.start : `${h.start} – ${h.end}`}
             </p>
           ))}
         </div>
@@ -329,10 +329,10 @@ function ContactStep({ value, onChange, isGiftCard, selectedProduct, onProductSe
   return (
     <div>
       <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 8 }}>
-        {isGiftCard ? "Choose your gift card" : "Your details"}
+        {isGiftCard ? "Gift a consultation" : "Your details"}
       </h2>
       <p style={{ fontSize: 14, color: C.textSec, marginBottom: 24, lineHeight: 1.6 }}>
-        {isGiftCard ? "Select a digital gift card, then fill in the details below." : "We'll send a confirmation to your email."}
+        {isGiftCard ? "Select a consultation package to gift, then fill in the details below." : "We'll send a confirmation to your email."}
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
@@ -342,10 +342,10 @@ function ContactStep({ value, onChange, isGiftCard, selectedProduct, onProductSe
               {GIFT_DENOMS.map(d => {
                 const active = selectedProduct?.id === d.product.id;
                 return (
-                  <button key={d.sessions} onClick={() => onProductSelect(d.product)} style={{ background: active ? C.forest : C.white, color: active ? C.bone : C.forest, border: `1.5px solid ${active ? C.forest : C.boneDark}`, borderRadius: 10, padding: "16px 18px", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+                  <button key={d.product.id} onClick={() => onProductSelect(d.product)} style={{ background: active ? C.forest : C.white, color: active ? C.bone : C.forest, border: `1.5px solid ${active ? C.forest : C.boneDark}`, borderRadius: 10, padding: "16px 18px", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8 }}>
                       <div>
-                        <span style={{ fontWeight: 600, fontSize: 15 }}>{d.sessions === 1 ? "1 session" : `${d.sessions} sessions`}</span>
+                        <span style={{ fontWeight: 600, fontSize: 15 }}>{d.product.label}</span>
                         {d.saving && <span style={{ marginLeft: 8, fontSize: 11, fontWeight: 600, background: C.terracotta, color: C.bone, padding: "2px 8px", borderRadius: 20, letterSpacing: "0.06em" }}>{d.saving}</span>}
                       </div>
                       <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 400, flexShrink: 0 }}>{d.price}</span>
@@ -356,7 +356,7 @@ function ContactStep({ value, onChange, isGiftCard, selectedProduct, onProductSe
               })}
             </div>
             <div style={{ fontSize: 12, color: C.textSec, background: C.white, border: `1px solid ${C.boneDark}`, borderRadius: 8, padding: "10px 14px", lineHeight: 1.6 }}>
-              📧 Digital gift card — sent instantly to the recipient's email. Valid for 12 months.
+              Digital gift consultation — details sent instantly to the recipient's email. Valid for 12 months.
             </div>
           </>
         )}
@@ -399,7 +399,7 @@ function ContactStep({ value, onChange, isGiftCard, selectedProduct, onProductSe
         <div>
           <label style={labelStyle}>{isGiftCard ? "WRITE A GIFT MESSAGE (optional)" : "ANYTHING WE SHOULD KNOW? (optional)"}</label>
           <textarea style={{ ...inputStyle, resize: "vertical", minHeight: isGiftCard ? 110 : 80, fontSize: isGiftCard ? 12.5 : 14.5 }}
-            placeholder={isGiftCard ? `e.g. "For the person who calls touching their toes a personal best."` : "Injuries, goals, areas to focus on…"}
+            placeholder={isGiftCard ? `e.g. "For someone who's been meaning to sort out their business's AI for years."` : "Your business, what you're trying to solve, any tools you're already using…"}
             {...field("notes")}
             onFocus={e => e.target.style.borderColor = C.terracotta}
             onBlur={e => e.target.style.borderColor = C.boneDark}
@@ -463,7 +463,7 @@ function GiftCodePanel({ onSuccess, booking }) {
       <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
         <input
           style={{ ...inputStyle, flex: 1 }}
-          placeholder="AS-XXXX-XXXX"
+          placeholder="PA-XXXX-XXXX"
           value={code}
           onChange={e => { setCode(e.target.value.toUpperCase()); setStatus(null); }}
           onFocus={e => e.target.style.borderColor = C.terracotta}
@@ -568,7 +568,7 @@ function PaymentForm({ booking, onSuccess, isGiftFlow }) {
           </button>
         </>
       )}
-      <p style={{ fontSize: 12, color: C.textSec, textAlign: "center", marginTop: 12, lineHeight: 1.5 }}>🔒 Secured by Stripe · Cancel or reschedule up to 24 hours before</p>
+      <p style={{ fontSize: 12, color: C.textSec, textAlign: "center", marginTop: 12, lineHeight: 1.5 }}>🔒 Secured by Stripe · Cancel or reschedule up to 24 hours before your call</p>
     </form>
   );
 }
@@ -659,7 +659,7 @@ function DemoPaymentForm({ booking, onSuccess, isGiftFlow }) {
           </button>
         </>
       )}
-      <p style={{ fontSize: 12, color: C.textSec, textAlign: "center", marginTop: 12 }}>🔒 Cancel or reschedule up to 24 hours before your session</p>
+      <p style={{ fontSize: 12, color: C.textSec, textAlign: "center", marginTop: 12 }}>🔒 Cancel or reschedule up to 24 hours before your call</p>
     </form>
   );
 }
@@ -670,7 +670,7 @@ function BookingSummary({ booking, isGiftFlow }) {
     <div style={{ background: C.white, border: `1px solid ${C.boneDark}`, borderRadius: 10, padding: "16px 18px", marginBottom: 20, fontSize: 13.5, lineHeight: 2, color: C.textSec }}>
       {isGiftFlow ? (
         <>
-          <div><span style={{ color: C.forest, fontWeight: 500 }}>Gift card:</span> {booking.product?.label}</div>
+          <div><span style={{ color: C.forest, fontWeight: 500 }}>Gift consultation:</span> {booking.product?.label}</div>
           {booking.contact?.recipientName  && <div><span style={{ color: C.forest, fontWeight: 500 }}>Recipient:</span> {booking.contact.recipientName}</div>}
           {booking.contact?.recipientEmail && <div><span style={{ color: C.forest, fontWeight: 500 }}>Sent to:</span> {booking.contact.recipientEmail}</div>}
           <div><span style={{ color: C.forest, fontWeight: 500 }}>Delivery:</span> Digital · instant</div>
@@ -693,14 +693,12 @@ function GiftServiceStep({ product, maxSessions }) {
   return (
     <div>
       <div style={{ width: 56, height: 56, borderRadius: "50%", background: C.forest, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20, fontSize: 24 }}>✓</div>
-      <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 12 }}>Gift card purchased.</h2>
+      <h2 style={{ fontFamily: "Georgia, serif", fontSize: 24, fontWeight: 400, color: C.forest, marginBottom: 12 }}>Gift consultation purchased.</h2>
       <p style={{ fontSize: 15, color: C.textSec, lineHeight: 1.7, marginBottom: 8 }}>
-        Your <strong style={{ color: C.forest }}>{product?.label}</strong> gift card code has been generated and will be emailed to the recipient.
+        Your <strong style={{ color: C.forest }}>{product?.label}</strong> gift code has been generated and will be emailed to the recipient.
       </p>
       <p style={{ fontSize: 14, color: C.textSec, lineHeight: 1.7 }}>
-        {multi
-          ? `Now let's book the sessions — you can schedule all ${maxSessions} now, or book the first one and come back later with your gift card code.`
-          : "Now let's book the session. Pick a date and time below."}
+        Now let's book the first call — pick a date and time below, or come back later with your gift card code.
       </p>
     </div>
   );
@@ -714,7 +712,7 @@ function Confirmation({ booking, onClose, isGiftFlow }) {
         <div style={{ width: 64, height: 64, borderRadius: "50%", background: C.forest, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px", fontSize: 28 }}>✓</div>
         <h2 style={{ fontFamily: "Georgia, serif", fontSize: 28, fontWeight: 400, color: C.forest, marginBottom: 12 }}>All done.</h2>
         <p style={{ fontSize: 15, color: C.textSec, lineHeight: 1.7, maxWidth: 360, margin: "0 auto 16px" }}>
-          Your <strong style={{ color: C.forest }}>{booking.product?.label}</strong> gift card has been sent to{" "}
+          Your <strong style={{ color: C.forest }}>{booking.product?.label}</strong> gift consultation has been sent to{" "}
           <strong style={{ color: C.forest }}>{booking.contact?.recipientEmail || booking.contact?.email}</strong>.
         </p>
         {booking.sessions?.length > 0 && (
@@ -739,8 +737,8 @@ function Confirmation({ booking, onClose, isGiftFlow }) {
         {booking.date?.toLocaleDateString("en-AU", { weekday: "long", day: "numeric", month: "long" })} at {booking.time}.
       </p>
       <div style={{ background: C.white, border: `1px solid ${C.boneDark}`, borderRadius: 12, padding: "20px 24px", marginBottom: 28, textAlign: "left", fontSize: 13.5, lineHeight: 2.1, color: C.textSec }}>
-        <div>📍 <strong style={{ color: C.forest }}>Location:</strong> [Studio address — add yours here]</div>
-        <div>🕐 <strong style={{ color: C.forest }}>Arrive:</strong> 5 minutes early in comfortable clothing</div>
+        <div>📞 <strong style={{ color: C.forest }}>Format:</strong> Video call or phone — we'll send a link</div>
+        <div>📋 <strong style={{ color: C.forest }}>Prep:</strong> Think about your biggest operational pain points</div>
         <div>↩️ <strong style={{ color: C.forest }}>Cancel / reschedule:</strong> Up to 24 hours before</div>
       </div>
       <button onClick={onClose} style={{ ...btn("primary"), padding: "14px 40px", fontSize: 15 }}>Done</button>
@@ -765,9 +763,9 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
 
         // Build products from server pricing
         const products = [
-          { id: 'session', label: 'Single Session', price: p.session || 125,    per: null,                                              desc: '1 × 60-min assisted stretch session', badge: null },
-          { id: '5-pack',  label: '5-Pack',          price: p['5-pack'] || 575,  per: Math.round((p['5-pack'] || 575) / 5),              desc: '5 × 60-min sessions · Valid 6 months', badge: 'Popular' },
-          { id: '10-pack', label: '10-Pack',          price: p['10-pack'] || 1000, per: Math.round((p['10-pack'] || 1000) / 10),          desc: '10 × 60-min sessions · Valid 12 months', badge: null },
+          { id: 'clarity-call',       label: 'Clarity Call',            price: p['clarity-call'] ?? 0,    per: null, desc: 'Free 30-min strategy call — we map where AI can save your business real time and money.', badge: 'Free' },
+          { id: 'assessment-deposit', label: 'AI Readiness Assessment', price: p['assessment-deposit'] ?? 1800, per: null, desc: 'Full 2–3 session assessment with a detailed 20-page AI Readiness Report.', badge: null },
+          { id: 'retainer-starter',   label: 'Starter Retainer',        price: p['retainer-starter'] ?? 800,  per: null, desc: 'Monthly strategy call, email support, quarterly tool review. Best for 1–5 staff.', badge: null },
         ];
         setLiveProducts(products);
 
@@ -839,7 +837,7 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
   if (!isOpen) return null;
 
   const giftMaxDate      = getGiftMaxDate(giftProduct?.id);
-  const maxGiftSessions  = giftProduct?.id === "5-pack" ? 5 : giftProduct?.id === "10-pack" ? 10 : 1;
+  const maxGiftSessions  = 1; // all packading gift products cover 1 call/session
   const giftSessionNum   = giftSessions.length + 1; // 1-indexed, current session being booked
 
   // ── Gift card flow canNext
@@ -941,7 +939,7 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
       <div style={sheetStyle}>
         {/* Header */}
         <div style={{ padding: "24px 28px 20px", borderBottom: `1px solid ${C.boneDark}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ fontFamily: "Georgia, serif", fontSize: 15, color: C.textSec, fontStyle: "italic" }}>Assisted Stretches</div>
+          <div style={{ fontFamily: "Georgia, serif", fontSize: 15, color: C.textSec, fontStyle: "italic" }}>packading.ai</div>
           <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 22, color: C.textSec, lineHeight: 1, padding: "0 4px" }}>×</button>
         </div>
 
@@ -977,7 +975,7 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
               {maxGiftSessions > 1 && giftSessions.length > 0 && (giftStep === 3 || giftStep === 4) && (
                 <div style={{ textAlign: "center", marginTop: 12 }}>
                   <button onClick={finishBookingEarly} style={{ background: "none", border: "none", color: C.textSec, fontSize: 13, cursor: "pointer", textDecoration: "underline" }}>
-                    Done for now — book remaining sessions later with my gift card code
+                    Done for now — book later with my gift card code
                   </button>
                 </div>
               )}

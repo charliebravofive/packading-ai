@@ -203,7 +203,7 @@ export default function EnquiriesPage() {
                                 {saving ? 'Saving…' : 'Save'}
                               </button>
                               <a
-                                href={`mailto:${enq.email}?subject=Re: Your enquiry to Assisted Stretches`}
+                                href={`mailto:${enq.email}?subject=Re: Your enquiry to packading.ai`}
                                 style={{ ...secondaryBtnStyle, textDecoration: 'none', display: 'inline-block' }}
                               >
                                 Reply via Email

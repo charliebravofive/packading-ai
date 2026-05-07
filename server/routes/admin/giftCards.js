@@ -3,8 +3,8 @@ const router = express.Router();
 const store = require('../../store');
 const { sendGiftCardEmail } = require('../../lib/mailer');
 
-const LABELS = { 'session': 'Single Session', '5-pack': '5-Pack', '10-pack': '10-Pack' };
-const SESSIONS = { 'session': 1, '5-pack': 5, '10-pack': 10 };
+const LABELS = { 'clarity-call': 'Clarity Call', 'assessment-deposit': 'AI Readiness Assessment', 'retainer-starter': 'Starter Retainer' };
+const SESSIONS = { 'clarity-call': 1, 'assessment-deposit': 1, 'retainer-starter': 1 };
 
 function randomCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';

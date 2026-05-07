@@ -41,6 +41,6 @@ app.use('/api/admin/config',     adminAuth, require('./routes/admin/config'));
 app.get('/api/health', (_req, res) => res.json({ ok: true, ts: new Date().toISOString() }));
 
 app.listen(PORT, () => {
-  console.log(`Assisted Stretches API → http://localhost:${PORT}`);
+  console.log(`packading.ai API → http://localhost:${PORT}`);
   console.log(`Email: ${process.env.RESEND_API_KEY ? 'Resend configured' : 'Demo mode (no email)'}`);
 });

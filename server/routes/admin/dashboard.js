@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const store = require('../../store');
 
-const PRICES = { session: 125, '5-pack': 575, '10-pack': 1000 };
+const PRICES = { 'clarity-call': 0, 'assessment-deposit': 1800, 'retainer-starter': 800 };
 
 function getPrice(product_id) {
   if (!product_id) return 0;
   const key = String(product_id).toLowerCase();
-  if (key.includes('10')) return PRICES['10-pack'];
-  if (key.includes('5')) return PRICES['5-pack'];
-  return PRICES['session'];
+  return PRICES[key] ?? 0;
 }
 
 router.get('/', (req, res) => {
@@ -86,15 +84,15 @@ router.get('/', (req, res) => {
       return true;
     });
 
-    let sessions_single = 0, sessions_5pack = 0, sessions_10pack = 0;
+    let bookings_clarity = 0, bookings_assessment = 0, bookings_retainer = 0;
     let revenue_stripe = 0, revenue_gift_card = 0;
 
     periodBookings.forEach(b => {
       const key = String(b.product_id || '').toLowerCase();
       const price = getPrice(b.product_id);
-      if (key.includes('10')) sessions_10pack++;
-      else if (key.includes('5')) sessions_5pack++;
-      else sessions_single++;
+      if (key.includes('assessment')) bookings_assessment++;
+      else if (key.includes('retainer')) bookings_retainer++;
+      else bookings_clarity++;
 
       if (b.payment_method === 'gift_card' || b.payment_method === 'gift-card') {
         revenue_gift_card += price;
@@ -104,9 +102,9 @@ router.get('/', (req, res) => {
     });
 
     period = {
-      sessions_single,
-      sessions_5pack,
-      sessions_10pack,
+      bookings_clarity,
+      bookings_assessment,
+      bookings_retainer,
       revenue_stripe,
       revenue_gift_card,
       total_revenue: revenue_stripe + revenue_gift_card,

@@ -64,7 +64,7 @@ export default function LoginPage({ onLogin }) {
           Admin Panel
         </h1>
         <p style={{ textAlign: 'center', color: '#888', fontSize: 14, margin: '0 0 28px' }}>
-          Assisted Stretches · Brisbane
+          packading.ai · Brisbane
         </p>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: 16 }}>

@@ -1,5 +1,5 @@
 {
-  "name": "assisted-stretches-server",
+  "name": "packading-server",
   "version": "1.0.0",
   "type": "commonjs",
   "main": "index.js",

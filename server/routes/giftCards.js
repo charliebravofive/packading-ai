@@ -4,9 +4,9 @@ const store   = require('../store');
 const { generateUniqueCode } = require('../lib/codeGenerator');
 const { sendGiftCardEmail, sendBookingConfirmationEmail } = require('../lib/mailer');
 
-const SESSIONS = { 'session': 1, '5-pack': 5, '10-pack': 10 };
-const LABELS   = { 'session': 'Single Session', '5-pack': '5-Pack', '10-pack': '10-Pack' };
-const EXPIRY_MONTHS = { 'session': 12, '5-pack': 6, '10-pack': 12 };
+const SESSIONS = { 'clarity-call': 1, 'assessment-deposit': 1, 'retainer-starter': 1 };
+const LABELS   = { 'clarity-call': 'Clarity Call', 'assessment-deposit': 'AI Readiness Assessment', 'retainer-starter': 'Starter Retainer' };
+const EXPIRY_MONTHS = { 'clarity-call': 12, 'assessment-deposit': 12, 'retainer-starter': 12 };
 
 // POST /api/gift-cards/purchase
 router.post('/purchase', async (req, res) => {
@@ -81,7 +81,7 @@ router.post('/validate', (req, res) => {
     const gc = store.giftCards.findByCode(code);
     if (!gc)                        return res.json({ valid: false, error: 'Gift card not found' });
     if (gc.status !== 'active')     return res.json({ valid: false, error: 'Gift card is no longer active' });
-    if (gc.sessions_remaining <= 0) return res.json({ valid: false, error: 'No sessions remaining on this gift card' });
+    if (gc.sessions_remaining <= 0) return res.json({ valid: false, error: 'No credits remaining on this gift card' });
     if (new Date(gc.expiry_date) < new Date()) return res.json({ valid: false, error: 'Gift card has expired' });
 
     res.json({ valid: true, sessions_remaining: gc.sessions_remaining, product_id: gc.product_id });
@@ -102,7 +102,7 @@ router.post('/redeem', async (req, res) => {
 
     if (!gc)                        return res.status(404).json({ error: 'Gift card not found' });
     if (gc.status !== 'active')     return res.status(400).json({ error: 'Gift card is not active' });
-    if (gc.sessions_remaining <= 0) return res.status(400).json({ error: 'No sessions remaining' });
+    if (gc.sessions_remaining <= 0) return res.status(400).json({ error: 'No credits remaining on this gift card' });
 
     const remaining = gc.sessions_remaining - 1;
     store.giftCards.update(normalised, {
@@ -132,7 +132,7 @@ router.post('/redeem', async (req, res) => {
     await sendBookingConfirmationEmail({
       email: booking.email, firstName: booking.first_name,
       sessionDate: booking.session_date, sessionTime: booking.session_time,
-      productLabel: 'Assisted Stretch Session',
+      productLabel: LABELS[gc.product_id] || gc.product_id || 'Consultation',
     });
 
     res.json({ success: true, booking_id: bookingRecord.id, sessions_remaining: remaining });
