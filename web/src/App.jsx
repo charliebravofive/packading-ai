@@ -327,11 +327,7 @@ function NavBar({ page, setPage, openBooking }) {
         transition: "all 0.3s ease",
         padding: "0 28px",
       }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
-          <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-            <BrandLogo height={34} light />
-          </button>
-
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 84 }}>
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 40 }}>
             {navItems.map(item => (
               <button key={item.key} onClick={() => setPage(item.key)} style={{
@@ -346,6 +342,10 @@ function NavBar({ page, setPage, openBooking }) {
               Book a Clarity Call
             </PrimaryButton>
           </div>
+
+          <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+            <BrandLogo height={68} light />
+          </button>
 
           <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{
             display: "none", background: "none", border: "none", cursor: "pointer",
@@ -1009,7 +1009,7 @@ function FAQPage({ openBooking }) {
       </div>
 
       {/* Category filter */}
-      <div style={{ background: "var(--bone)", borderBottom: "1px solid rgba(196,114,74,0.12)", position: "sticky", top: 72, zIndex: 90 }}>
+      <div style={{ background: "var(--bone)", borderBottom: "1px solid rgba(196,114,74,0.12)", position: "sticky", top: 84, zIndex: 90 }}>
         <Container>
           <div style={{ display: "flex", gap: 8, padding: "16px 0", overflowX: "auto", scrollbarWidth: "none" }}>
             <button
