@@ -328,6 +328,10 @@ function NavBar({ page, setPage, openBooking }) {
         padding: "0 28px",
       }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 84 }}>
+          <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
+            <BrandLogo height={68} light />
+          </button>
+
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 40 }}>
             {navItems.map(item => (
               <button key={item.key} onClick={() => setPage(item.key)} style={{
@@ -342,10 +346,6 @@ function NavBar({ page, setPage, openBooking }) {
               Book a Clarity Call
             </PrimaryButton>
           </div>
-
-          <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-            <BrandLogo height={68} light />
-          </button>
 
           <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{
             display: "none", background: "none", border: "none", cursor: "pointer",
