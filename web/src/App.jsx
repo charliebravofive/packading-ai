@@ -325,9 +325,8 @@ function NavBar({ page, setPage, openBooking }) {
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(196,114,74,0.12)" : "none",
         transition: "all 0.3s ease",
-        padding: "0 28px",
       }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 84 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 84 }}>
           <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
             <BrandLogo height={68} light />
           </button>
