@@ -450,14 +450,8 @@ function HomePage({ setPage, openBooking }) {
 
         <Container style={{ paddingTop: 120, paddingBottom: 80 }}>
           <div style={{ maxWidth: 780 }}>
-            <div className="fade-up" style={{
-              display: "inline-block",
-              background: "rgba(196,114,74,0.12)", border: "1px solid rgba(196,114,74,0.25)",
-              borderRadius: 4, padding: "6px 14px", marginBottom: 32,
-            }}>
-              <span style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--terracotta)", textTransform: "uppercase" }}>
-                Brisbane AI Advisory
-              </span>
+            <div className="fade-up" style={{ marginBottom: 28 }}>
+              <BrandLogo height={72} light />
             </div>
 
             <h1 className="fade-up delay-1" style={{
