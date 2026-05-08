@@ -821,13 +821,13 @@ function AboutPage({ openBooking }) {
 
   return (
     <>
-      <div style={{ background: "var(--charcoal)", paddingTop: 100, paddingBottom: 48, position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "var(--charcoal)", paddingTop: 72, paddingBottom: 32, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 40, borderRadius: 24, border: "0.5px solid rgba(196,114,74,0.12)", pointerEvents: "none" }} />
         <Container>
           <SectionLabel text="About packading.ai" light />
           <h1 style={{
             fontFamily: "var(--font-display)", fontWeight: 700,
-            fontSize: "clamp(32px, 5vw, 60px)", color: "var(--bone)",
+            fontSize: "clamp(24px, 4vw, 44px)", color: "var(--bone)",
             letterSpacing: "-0.02em", lineHeight: 1.1, maxWidth: 700, marginBottom: 0,
           }}>
             AI advice that actually fits<br />
