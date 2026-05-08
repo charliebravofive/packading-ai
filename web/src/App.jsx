@@ -311,9 +311,9 @@ function NavBar({ page, setPage, openBooking }) {
   }, []);
 
   const navItems = [
+    { label: "About", key: PAGES.about },
     { label: "Services", key: PAGES.services },
     { label: "FAQ", key: PAGES.faq },
-    { label: "About", key: PAGES.about },
     { label: "Contact", key: PAGES.contact },
   ];
 
