@@ -842,10 +842,10 @@ function AboutPage({ openBooking }) {
           <div style={{ maxWidth: 800 }}>
             <SectionLabel text="Company Overview" />
             <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--brown)", marginBottom: 20 }}>
-              Packading.ai is a Brisbane-based AI advisory and implementation agency founded to bridge the growing gap between rapidly evolving artificial intelligence technology and the practical realities faced by small and medium-sized businesses (SMBs) across South East Queensland.
+              We are a Brisbane-based AI advisory and implementation agency founded to bridge the growing gap between rapidly evolving artificial intelligence technology and the practical realities faced by small and medium-sized businesses (SMBs) across South East Queensland.
             </p>
-            <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--brown)" }}>
-              The name <em>Packading.ai</em> captures our core philosophy: we package AI into practical, digestible solutions — cutting through vendor noise and technical complexity so Brisbane business owners can focus on real-world results. Just as great packaging makes a complex product instantly understood and trusted, we make AI instantly understandable and trusted for the businesses we serve.
+            <p style={{ fontSize: 17, lineHeight: 1.8, color: "var(--brown)", fontStyle: "italic" }}>
+              The name packading.ai captures our core philosophy: we package AI into practical, digestible solutions — cutting through vendor noise and technical complexity so Brisbane business owners can focus on real-world results. Just as great packaging makes a complex product instantly understood and trusted, we make AI instantly understandable and trusted for the businesses we serve.
             </p>
           </div>
         </Container>
