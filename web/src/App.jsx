@@ -998,7 +998,7 @@ function FAQPage({ openBooking }) {
             <span style={{ color: "var(--terracotta)", fontStyle: "italic" }}>wondering about.</span>
           </h1>
           <p style={{ fontSize: 18, color: "rgba(245,240,235,0.7)", maxWidth: 540, lineHeight: 1.65 }}>
-            {FAQ_CATEGORIES.reduce((sum, c) => sum + c.items.length, 0)} questions answered — from how we work to how we charge to whether AI will actually help your business.
+            28 questions answered — from how we work to how we charge to whether AI will actually help your business.
           </p>
         </Container>
       </div>
