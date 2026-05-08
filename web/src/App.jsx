@@ -449,10 +449,6 @@ function HomePage({ setPage, openBooking }) {
 
         <Container style={{ paddingTop: 120, paddingBottom: 80 }}>
           <div style={{ maxWidth: 780 }}>
-            <div className="fade-up" style={{ marginBottom: 28 }}>
-              <BrandLogo height={72} light />
-            </div>
-
             <h1 className="fade-up delay-1" style={{
               fontFamily: "var(--font-display)", fontWeight: 700,
               fontSize: "clamp(36px, 5.5vw, 72px)", lineHeight: 1.05,
