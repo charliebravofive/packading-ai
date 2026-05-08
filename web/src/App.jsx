@@ -230,7 +230,7 @@ function BrandLogo({ height = 40, light = false }) {
 
 // ─── PRIMITIVES ─────────────────────────────────────────────
 function Container({ children, style = {} }) {
-  return <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 28px", ...style }}>{children}</div>;
+  return <div style={{ width: "100%", maxWidth: 1200, margin: "0 auto", padding: "0 28px", ...style }}>{children}</div>;
 }
 
 function Section({ children, style = {}, dark = false, id, blush = false }) {
