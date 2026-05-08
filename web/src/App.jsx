@@ -435,7 +435,7 @@ function HomePage({ setPage, openBooking }) {
     <>
       {/* HERO */}
       <div style={{
-        background: "var(--charcoal)", minHeight: "100vh",
+        background: "var(--charcoal)", minHeight: "60vh",
         display: "flex", alignItems: "center", position: "relative", overflow: "hidden",
       }}>
         <div style={{
