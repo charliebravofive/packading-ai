@@ -326,9 +326,9 @@ function NavBar({ page, setPage, openBooking }) {
         borderBottom: scrolled ? "1px solid rgba(196,114,74,0.12)" : "none",
         transition: "all 0.3s ease",
       }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 84 }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 28px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
           <button onClick={() => { setPage(PAGES.home); setMenuOpen(false); }} style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}>
-            <BrandLogo height={68} light />
+            <BrandLogo height={44} light />
           </button>
 
           <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 40 }}>
@@ -357,7 +357,7 @@ function NavBar({ page, setPage, openBooking }) {
 
       {menuOpen && (
         <div style={{
-          position: "fixed", top: 72, left: 0, right: 0, bottom: 0,
+          position: "fixed", top: 60, left: 0, right: 0, bottom: 0,
           background: "rgba(20,20,20,0.98)", zIndex: 999,
           display: "flex", flexDirection: "column", padding: "40px 28px", gap: 8,
         }}>
@@ -1004,7 +1004,7 @@ function FAQPage({ openBooking }) {
       </div>
 
       {/* Category filter */}
-      <div style={{ background: "var(--bone)", borderBottom: "1px solid rgba(196,114,74,0.12)", position: "sticky", top: 84, zIndex: 90 }}>
+      <div style={{ background: "var(--bone)", borderBottom: "1px solid rgba(196,114,74,0.12)", position: "sticky", top: 60, zIndex: 90 }}>
         <Container>
           <div style={{ display: "flex", gap: 8, padding: "16px 0", overflowX: "auto", scrollbarWidth: "none" }}>
             <button
