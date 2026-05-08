@@ -470,10 +470,10 @@ function HomePage({ setPage, openBooking }) {
               <SecondaryButton light onClick={() => setPage(PAGES.services)}>See our services</SecondaryButton>
             </div>
 
-            <div className="fade-up delay-4" style={{ marginTop: 56, display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <div className="fade-up delay-4" style={{ marginTop: 56, display: "flex", gap: 8, flexWrap: "nowrap" }}>
               {["Brisbane-based", "Vendor-neutral", "Fixed-price projects", "No jargon"].map(tag => (
                 <span key={tag} style={{
-                  fontSize: 12, color: "rgba(245,240,235,0.5)",
+                  fontSize: 12, color: "rgba(245,240,235,0.5)", whiteSpace: "nowrap",
                   border: "1px solid rgba(245,240,235,0.12)", borderRadius: 4,
                   padding: "5px 12px", letterSpacing: "0.04em",
                 }}>{tag}</span>
