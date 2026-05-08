@@ -985,7 +985,7 @@ function FAQPage({ openBooking }) {
   return (
     <>
       {/* Hero */}
-      <div style={{ background: "var(--charcoal)", paddingTop: 140, paddingBottom: 80, position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "var(--charcoal)", paddingTop: 80, paddingBottom: 48, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 40, borderRadius: 24, border: "0.5px solid rgba(196,114,74,0.12)", pointerEvents: "none" }} />
         <Container>
           <SectionLabel text="FAQ" light />
