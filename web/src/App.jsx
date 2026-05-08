@@ -836,7 +836,7 @@ function AboutPage({ openBooking }) {
         </Container>
       </div>
 
-      <Section>
+      <Section style={{ paddingTop: 48 }}>
         <div className="bio-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
           <div>
             <SectionLabel text="Why we exist" />
