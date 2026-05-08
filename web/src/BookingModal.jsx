@@ -74,7 +74,7 @@ const btn = (variant, extra = {}) => ({
 });
 
 // ─── STEP BARS ───────────────────────────────────────────────
-const STEP_LABELS = ["Service","Date","Time","Details","Payment"];
+const STEP_LABELS = ["Service","Date","Time","Details"];
 
 function StepBar({ step }) {
   return (
@@ -899,8 +899,8 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
         setGiftStep(s => s + 1);
       }
     } else {
-      // Free product (clarity call) — skip payment, book directly from Details step
-      if (step === 3 && (product?.price === 0 || product?.id === 'clarity-call')) {
+      // Book directly on Details step — no payment step
+      if (step === 3) {
         try {
           await fetch("/api/bookings", {
             method: "POST", headers: { "Content-Type": "application/json" },
@@ -943,13 +943,13 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
   const showNavBtns = !isDone && (
     isGiftCardFlow
       ? (giftStep === 0 || giftStep === 2 || giftStep === 3 || giftStep === 4)
-      : (step < 4)
+      : (step <= 3)
   );
 
   const nextLabel =
     isGiftCardFlow
       ? (giftStep === 0 ? "Continue to payment →" : giftStep === 2 ? "Choose a date →" : giftStep === 3 ? "Choose a time →" : "Confirm booking →")
-      : (step === 3 && (product?.price === 0 || product?.id === 'clarity-call') ? "Confirm free booking →" : step === 3 ? "Continue to payment →" : "Continue →");
+      : (step === 3 ? "Confirm booking →" : "Continue →");
 
   return (
     <div style={overlayStyle} onClick={e => e.target === e.currentTarget && onClose()}>
@@ -1006,18 +1006,14 @@ export default function BookingModal({ isOpen, onClose, initialProduct, initialS
               {step === 1 && <DateStep value={date} onChange={setDate} availableDays={liveAvailDays} holidays={liveHolidays} />}
               {step === 2 && <TimeStep date={date} value={time} onChange={setTime} takenSlots={takenSlots} slotsByDay={liveSlotsByDay} />}
               {step === 3 && <ContactStep value={contact} onChange={setContact} isGiftCard={false} />}
-              {step === 4 && paymentNode}
 
               {showNavBtns && (
                 <div style={{ display: "flex", gap: 12, marginTop: 28 }}>
                   {step > 0 && <button onClick={handleBack} style={btn("ghost", { flex: 1 })}>← Back</button>}
                   <button onClick={handleNext} disabled={!canNext} style={{ ...btn("primary"), flex: 2, opacity: canNext ? 1 : 0.45, cursor: canNext ? "pointer" : "default" }}>
-                    {step === 3 ? "Continue to payment →" : "Continue →"}
+                    {nextLabel}
                   </button>
                 </div>
-              )}
-              {step === 4 && (
-                <button onClick={handleBack} style={{ ...btn("ghost"), width: "100%", marginTop: 12 }}>← Back</button>
               )}
             </>
           )}
