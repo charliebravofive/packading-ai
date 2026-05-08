@@ -848,7 +848,7 @@ function AboutPage({ openBooking }) {
               Brisbane's small businesses have real AI opportunities — but they need advice that's practical, local, and priced for an SMB budget. That's why packading.ai exists.
             </p>
             <p style={{ fontSize: 16, lineHeight: 1.8, color: "var(--text-secondary)" }}>
-              We work with trades companies, retailers, allied health practices, and professional service firms across South East Queensland. We show up in person, we speak plainly, and we stay until the tools are delivering value.
+              We work with trades companies, retailers, allied health practices, and professional service firms across South East Queensland. We speak plainly and we stay until the tools are delivering value.
             </p>
           </div>
           <div style={{ background: "var(--blush)", borderRadius: 12, padding: "48px 40px", border: "1px solid rgba(196,114,74,0.12)" }}>
